@@ -3,6 +3,15 @@
 	
 	Euler's totient function gives number of coprime integers with N
 	but when you have 2 prime factor-pairs then you can just do (p - 1)(q - 1)
+	
+	In the totient function, used a bruteforce method to find whether 
+	2 numbers were coprime. 
+	
+	In later functions, I will use an alternate method using HCF because I have 
+	learned about the euclidean algorithm which quickly finds HCF and if HCF of 2 numbers
+	is 1 then they are coprime. 
+	
+	(HCF is Highest Common Factor; americans call this the GCD - Greatest Common Divisor)
 --]]
 
 local RSAModule = {
@@ -38,6 +47,10 @@ function RSAModule:EulerTotient(n) -- the brute force way (not (p - 1)(q - 1)) l
 	end
 	
 	return count
+end
+
+function RSAModule:HCF(a, b)
+	
 end
 
 function RSAModule:ModulusClock(x, p, modulo)
