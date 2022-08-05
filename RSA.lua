@@ -96,13 +96,25 @@ function RSAModule:BruteForceKey(p, modulo)
 
 end
 
-function RSAModule:GeneratePublicKey(p, q)
-	local n = p * q
-end
-
-function RSAModule:GeneratePrivateKey(p, q)
+function RSAModule:GenerateKeys(p, q)
+	local N = p * q 
 	local EulerTotient = (p - 1) * (q - 1)
+	
+	local Encryption = nil
+	
+	for e = 2, EulerTotient - 1 do
+		if (self:HCF(N, e) == 1) and (self:HCF(EulerTotient, e) == 1) then
+			print(e)
+			Encryption = e
+			break
+		end
+	end
+	
+	-- d * e % (EulerTotient) = 1
 
+	local Decryption = (EulerTotient - 1)
+	
+	return Encryption, Decryption, N
 end
 
 return RSAModule
