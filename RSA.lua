@@ -15,42 +15,56 @@
 --]]
 
 local RSAModule = {
-	
+
 }
 
 function RSAModule:EulerTotient(n) -- the brute force way (not (p - 1)(q - 1)) lmao
 	local factors = {}
-	
+
 	for i = 2,math.sqrt(n) do
 		if (n % i) == 0 then
 			table.insert(factors, i)
 			table.insert(factors, n/i)
 		end
 	end
-	
+
 	local LenFactors = #factors
 	local count = 0
-	
+
 	for i = 1, n-1 do
 		local coprime = true
-		
+
 		for d = 1,LenFactors do
 			if (i % factors[d]) == 0 then
 				coprime = false
 				break
 			end
 		end
-		
+
 		if coprime then
 			count += 1
 		end
 	end
-	
+
 	return count
 end
 
 function RSAModule:HCF(a, b)
+	if a < b then
+		a,b = b,a 
+	end
 	
+	while not ((a == 0) or (b == 0)) do
+		local result = (a % b)
+		a = b
+		b = result
+	end
+	
+	if (a == 0) then
+		return b
+	else 
+		return a 
+	end
 end
 
 function RSAModule:ModulusClock(x, p, modulo)
@@ -62,11 +76,11 @@ function RSAModule:ModulusClock(x, p, modulo)
 	--]]
 
 	local oX = x -- since x will change
-	
+
 	for i = 2, p do
 		x = ((x * oX) % modulo)
 	end
-	
+
 	return x
 end
 
@@ -75,11 +89,11 @@ function RSAModule:EncryptNumber(x, n, e)
 end
 
 function RSAModule:Encrypt(x, n, e)
-	
+
 end
 
 function RSAModule:BruteForceKey(p, modulo)
-	
+
 end
 
 function RSAModule:GeneratePublicKey(p, q)
@@ -88,7 +102,7 @@ end
 
 function RSAModule:GeneratePrivateKey(p, q)
 	local EulerTotient = (p - 1) * (q - 1)
-	
+
 end
 
 return RSAModule
