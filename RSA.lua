@@ -96,6 +96,47 @@ function RSAModule:BruteForceKey(p, modulo)
 
 end
 
+function RSAModule:FermatsFactorisation(N)
+	--[[ 
+		assume that N is made from (a - b)(a + b) where a is some midpoint
+		so p = (a - b), q = (a + b) or other way round (doesn't matter)
+		
+		therefore N = (a - b)(a + b) = a^2 - b^2
+		so if N = a^2 - b^2 then 
+		
+		b^2 = a^2 - N
+		b = root(a^2 - N)
+		
+		Won't work if a or b are not integers; honestly not sure how reliable it is
+		Says that it works for "large" prime number factors
+		
+		Doesn't work for 14 (splits into 7, 2 and their midpoint is not an integer)
+	--]]
+	
+	local MaxIterations = 1000000
+	
+	local a = math.ceil(math.sqrt(N))
+	
+	local MaxA = math.min(a + MaxIterations, N)
+	local FinalB = -1
+	
+	while a < MaxA do
+		
+		local b = math.sqrt(a*a - N)
+		print("Fermats" , a, b)
+		if math.floor(b) == b then
+			FinalB = b
+			break
+		end 
+		
+		a += 1
+	end
+	
+	if not (FinalB == -1) then
+		return (a - FinalB), (a + FinalB)
+	end
+end
+
 function RSAModule:GenerateKeys(p, q)
 	local N = p * q 
 	local EulerTotient = (p - 1) * (q - 1)
@@ -110,7 +151,7 @@ function RSAModule:GenerateKeys(p, q)
 		end
 	end
 	
-	-- d * e % (EulerTotient) = 1
+	-- [d * e] % (EulerTotient) = 1
 
 	local Decryption = (EulerTotient - 1)
 	
