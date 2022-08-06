@@ -111,6 +111,14 @@ function RSAModule:FermatsFactorisation(N, MaxIterations)
 		Says that it works for "large" prime number factors
 		
 		Doesn't work for 14 (splits into 7, 2 and their midpoint is not an integer)
+		
+		Edit: Just figured out why it works for "large" prime numbers
+		It's because most prime numbers (every except for 2) are odd
+		and the difference between two odd numbers will be a multiple of 2
+		therefore, the midpoint between the numbers will be a whole number 
+		
+		If the number is even then you know 2 is one of these factors and so 
+		the problem is solved since you can easily calculate the other factor
 	--]]
 
 	local a = math.ceil(math.sqrt(N))
