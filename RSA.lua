@@ -96,7 +96,7 @@ function RSAModule:BruteForceKey(p, modulo)
 
 end
 
-function RSAModule:FermatsFactorisation(N)
+function RSAModule:FermatsFactorisation(N, MaxIterations)
 	--[[ 
 		assume that N is made from (a - b)(a + b) where a is some midpoint
 		so p = (a - b), q = (a + b) or other way round (doesn't matter)
@@ -112,9 +112,7 @@ function RSAModule:FermatsFactorisation(N)
 		
 		Doesn't work for 14 (splits into 7, 2 and their midpoint is not an integer)
 	--]]
-	
-	local MaxIterations = 1000000
-	
+
 	local a = math.ceil(math.sqrt(N))
 	
 	local MaxA = math.min(a + MaxIterations, N)
