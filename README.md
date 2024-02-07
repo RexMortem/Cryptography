@@ -1,2 +1,2 @@
 # Cryptography
-Note that some of these files/algorithms are from my TKS Blockchain Project where I originally rewrote these algorithms 
+Not for use as the implementations are slow (for instance, I use strings to represent binary numbers for some reason?)
